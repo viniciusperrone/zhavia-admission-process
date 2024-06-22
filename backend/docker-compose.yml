@@ -12,26 +12,16 @@ services:
       - db
 
   db:
-    build: .docker/postgres
+    image: mariadb:latest
     container_name: zhavia-db
     restart: always
     tty: true
     ports:
       - '5432:5432'
     volumes:
-      - .docker/dbdata:/var/lib/postgresql/data
+      - .docker/dbdata:/var/lib/mysql
     environment:
-      - POSTGRES_PASSWORD=zhavia-db
-      - POSTGRES_DB=zhavia-db
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: zhavia-pgadmin
-    tty: true
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    ports:
-      - '8000:80'
-    depends_on:
-      - db
+      - MYSQL_ROOT_PASSWORD=zhavia-db
+      - MYSQL_DATABASE=zhavia-db
+      - MYSQL_USER=zhavia
+      - MYSQL_PASSWORD=zhavia-password
