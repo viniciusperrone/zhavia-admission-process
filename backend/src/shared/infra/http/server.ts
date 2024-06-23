@@ -15,7 +15,7 @@ dataSource.initialize().then(() => {
   app.use(express.json());
 
   app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hello COAOA!');
   });
 
   app.listen(process.env.SERVER_PORT, () => {
