@@ -1,12 +1,13 @@
 import 'reflect-metadata';
 import '@shared/container';
 
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
 import { dataSource } from '../typeorm';
 import router from './routes';
+import AppError from '@shared/errors/AppError';
 
 dotenv.config();
 
@@ -18,9 +19,26 @@ dataSource.initialize().then(() => {
 
   app.use(router);
 
-  app.get('/', (req, res) => {
-    res.send('Hello wk2mwk2!');
-  });
+  app.use(
+    (
+      error: Error,
+      request: Request,
+      response: Response,
+      next: NextFunction,
+    ) => {
+      if (error instanceof AppError) {
+        return response.status(error.statusCode).json({
+          status: 'error',
+          message: error.message,
+        });
+      }
+
+      return response.status(500).json({
+        status: 'error',
+        message: 'Internal Server Error',
+      });
+    },
+  );
 
   app.listen(process.env.SERVER_PORT, () => {
     console.log('Server running on port 3000');
