@@ -14,6 +14,12 @@ class UserRepository implements IUserRepository {
     this.databaseRepository = dataSource.getRepository(User);
   }
 
+  public async findById(uuid: string): Promise<IUser | null> {
+    const user = await this.databaseRepository.findOne({ where: { uuid } });
+
+    return user;
+  }
+
   public async findAll(): Promise<IUser[]> {
     const users = await this.databaseRepository.find();
 
