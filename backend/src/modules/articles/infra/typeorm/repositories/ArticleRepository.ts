@@ -1,10 +1,11 @@
 import { Repository } from 'typeorm';
 
+import { dataSource } from '@shared/infra/typeorm';
+import Article from '../entities/Article';
+
 import { IArticle } from '@modules/articles/domain/models/IArticle';
 import { ICreateArticle } from '@modules/articles/domain/models/ICreateArticle';
 import { IArticleRepository } from '@modules/articles/domain/repositories/IArticleRepository';
-import Article from '../entities/Article';
-import { dataSource } from '@shared/infra/typeorm';
 
 class ArticleRepository implements IArticleRepository {
   private databaseRepository: Repository<Article>;
@@ -54,4 +55,4 @@ class ArticleRepository implements IArticleRepository {
   }
 }
 
-export default ArticleRepository;
+export { ArticleRepository };
