@@ -13,6 +13,12 @@ class ArticleRepository implements IArticleRepository {
     this.databaseRepository = dataSource.getRepository(Article);
   }
 
+  public async findAll(): Promise<IArticle[]> {
+    const articles = await this.databaseRepository.find();
+
+    return articles;
+  }
+
   public async create({
     title,
     description,
