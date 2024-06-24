@@ -1,10 +1,9 @@
 import { IArticle } from '../models/IArticle';
-import { ICreateArticle } from '../models/ICreateArticle copy';
-import { IUpdateArticle } from '../models/IUpdateArticle';
+import { ICreateArticle } from '../models/ICreateArticle';
 
 export interface IArticleRepository {
   create(data: ICreateArticle): Promise<IArticle>;
-  update(data: IUpdateArticle): Promise<IArticle>;
+  update(article: IArticle): Promise<IArticle>;
   findById(id: string): Promise<IArticle>;
-  remove(id: string): Promise<void>;
+  remove(article: IArticle): Promise<void>;
 }
