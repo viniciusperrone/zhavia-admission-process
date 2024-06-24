@@ -1,7 +1,7 @@
 import { injectable as Injectable, inject as Inject } from 'tsyringe';
 
 import { IArticleRepository } from '../domain/repositories/IArticleRepository';
-import { IArticle } from '../domain/models/IArticle';
+import AppError from '@shared/errors/AppError';
 
 @Injectable()
 class DeleteArticleService {
@@ -10,8 +10,14 @@ class DeleteArticleService {
     private articleRepository: IArticleRepository,
   ) {}
 
-  public async execute(article: IArticle): Promise<void> {
-    await this.articleRepository.remove(article);
+  public async execute(uuid: string): Promise<void> {
+    const existArticle = await this.articleRepository.findById(uuid);
+
+    if (!existArticle) {
+      throw new AppError('Could not find any article with the given id.');
+    }
+
+    await this.articleRepository.remove(existArticle);
   }
 }
 
