@@ -22,7 +22,7 @@ class Article {
   description: string;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id ' })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @CreateDateColumn()
