@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { Joi, Segments, celebrate } from 'celebrate';
 
+import isAuthenticated from '@shared/infra/http/middlewares/isAuthenticated';
+
 import { ArticleController } from '../controllers/ArticleController';
 
 const articlesRouter = Router();
@@ -20,6 +22,7 @@ articlesRouter.get(
 
 articlesRouter.post(
   '/create',
+  isAuthenticated,
   celebrate({
     [Segments.BODY]: {
       user_id: Joi.string().uuid().required(),
@@ -32,6 +35,7 @@ articlesRouter.post(
 
 articlesRouter.put(
   '/:article_id',
+  isAuthenticated,
   celebrate({
     [Segments.PARAMS]: {
       article_id: Joi.string().uuid().required(),
@@ -46,6 +50,7 @@ articlesRouter.put(
 
 articlesRouter.delete(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
