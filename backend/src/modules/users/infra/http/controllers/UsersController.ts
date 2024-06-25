@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 
 import ListUsersService from '@modules/users/services/ListUsersService';
 import CreateUserService from '@modules/users/services/CreateUserService';
+import AppError from '@shared/errors/AppError';
 
 class UsersController {
   public async list(request: Request, response: Response): Promise<Response> {
@@ -14,13 +15,23 @@ class UsersController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, email, password } = request.body;
+    try {
+      const { name, email, password } = request.body;
 
-    const createUser = container.resolve(CreateUserService);
+      const createUser = container.resolve(CreateUserService);
 
-    const user = await createUser.execute({ name, email, password });
+      const user = await createUser.execute({ name, email, password });
 
-    return response.json(user);
+      return response.json(user);
+    } catch (error) {
+      console.error(error);
+
+      if (error instanceof AppError) {
+        return response.status(400).json({ message: error.message });
+      }
+
+      return response.status(500).json({ message: 'Internal Server Error' });
+    }
   }
 }
 
