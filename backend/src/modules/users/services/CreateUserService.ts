@@ -5,6 +5,7 @@ import { IUser } from '../domain/models/IUser';
 import { ICreateUser } from '../domain/models/ICreateUser';
 
 import AppError from '@shared/errors/AppError';
+import { hash } from 'bcryptjs';
 
 @Injectable()
 class CreateUserService {
@@ -20,10 +21,12 @@ class CreateUserService {
       throw new AppError('Email address already used!');
     }
 
+    const hashedPassword = await hash(password, 8);
+
     const user = await this.usersRepository.create({
       name,
       email,
-      password,
+      password: hashedPassword,
     });
 
     return user;
