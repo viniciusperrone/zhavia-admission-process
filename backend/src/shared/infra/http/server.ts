@@ -4,6 +4,7 @@ import '@shared/container';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { errors } from 'celebrate';
 
 import { dataSource } from '../typeorm';
 import router from './routes';
@@ -18,6 +19,7 @@ dataSource.initialize().then(() => {
   app.use(express.json());
 
   app.use(router);
+  app.use(errors());
 
   app.use(
     (
