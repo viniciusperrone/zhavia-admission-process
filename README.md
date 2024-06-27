@@ -22,9 +22,33 @@ O backend está organizado em camadas de `domain`, `services` e `infra`, atenden
 
 ```bash
 /src
+  /@types/express
   /config
+    auth.ts
   /modules
+    /articles
+      /domain
+      /infra
+      /services
+    /users
+      /domain
+      /infra
+      /services
   /shared
+    /container
+      index.ts
+    /errors
+      AppError.ts
+    /infra
+      /http
+        /middlewares
+          isAuthenticated.ts
+        /routes
+          index.ts
+        server.ts
+      /typeorm
+        /migrations
+        index.ts
 ```
 
 #### Funcionalidades implementadas
