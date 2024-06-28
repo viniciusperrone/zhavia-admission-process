@@ -28,8 +28,29 @@ O backend está organizado em camadas de `domain`, `services` e `infra`, atenden
   /modules
     /articles
       /domain
+        /models
+          IArticle.ts
+          ICreateArticle.ts
+          IUpdateArticle.ts
+        /repositories
+          IArticleRepository.ts
       /infra
+        /http
+          /controllers
+            ArticleController.ts 
+          /routes
+            articles.routes.ts
+        /typeorm
+          /entities
+            Article.ts
+          /repositories
+            ArticleRepository.ts
       /services
+        CreateArticleService.ts
+        DeleteArticleService.ts
+        ListArticleService.ts
+        ShowArticleService.ts
+        UpdateArticleService.ts
     /users
       /domain
       /infra
