@@ -11,6 +11,7 @@ services:
       - .:/home/node/app:delegated
     depends_on:
       - db
+      - elasticsearch
 
   db:
     image: mariadb:latest
@@ -26,3 +27,18 @@ services:
       - MYSQL_DATABASE=zhavia-db
       - MYSQL_USER=zhavia
       - MYSQL_PASSWORD=zhavia-password
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+    container_name: zhavia-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - '9200:9200'
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+volumes:
+  dbdata:
+  esdata:
