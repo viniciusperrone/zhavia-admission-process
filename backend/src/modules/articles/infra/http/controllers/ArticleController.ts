@@ -51,7 +51,7 @@ class ArticleController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     try {
-      const { user_id, title, description } = request.body;
+      const { user_id, title, description, slug, category } = request.body;
 
       const createArticle = container.resolve(CreateArticleService);
 
@@ -59,6 +59,8 @@ class ArticleController {
         user_id,
         title,
         description,
+        slug,
+        category,
       });
 
       return response.json(article);
@@ -76,7 +78,7 @@ class ArticleController {
   public async update(request: Request, response: Response): Promise<Response> {
     try {
       const { article_id } = request.params;
-      const { title, description } = request.body;
+      const { title, description, slug, category } = request.body;
 
       const updateArticle = container.resolve(UpdateArticleService);
 
@@ -84,6 +86,8 @@ class ArticleController {
         article_id,
         title,
         description,
+        slug,
+        category,
       });
 
       return response.json(article);

@@ -24,6 +24,8 @@ class CreateArticleService {
     user_id,
     title,
     description,
+    slug,
+    category,
   }: IRequest): Promise<IArticle> {
     const userExist = await this.userRepository.findById(user_id);
 
@@ -35,6 +37,8 @@ class CreateArticleService {
       user: userExist,
       title,
       description,
+      slug,
+      category,
     });
 
     return article;

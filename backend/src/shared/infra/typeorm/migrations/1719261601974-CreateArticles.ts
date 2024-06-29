@@ -22,6 +22,14 @@ export class CreateArticles1719261601974 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'slug',
+            type: 'varchar',
+          },
+          {
+            name: 'category',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

@@ -4,6 +4,8 @@ export interface IArticle {
   uuid: string;
   title: string;
   description: string;
+  slug: string;
+  category: string;
   user: IUser;
   created_at: Date;
   updated_at: Date;

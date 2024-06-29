@@ -21,6 +21,12 @@ class Article {
   @Column()
   description: string;
 
+  @Column()
+  slug: string;
+
+  @Column()
+  category: string;
+
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;

@@ -16,6 +16,8 @@ class UpdateArticleService {
     article_id,
     title,
     description,
+    slug,
+    category,
   }: IUpdateArticle): Promise<IArticle> {
     const dateUpdated = new Date();
 
@@ -29,6 +31,8 @@ class UpdateArticleService {
       ...articleExist,
       title,
       description,
+      slug,
+      category,
       updated_at: dateUpdated,
     });
 

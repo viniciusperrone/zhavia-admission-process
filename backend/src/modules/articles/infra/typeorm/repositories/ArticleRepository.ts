@@ -23,11 +23,15 @@ class ArticleRepository implements IArticleRepository {
   public async create({
     title,
     description,
+    slug,
+    category,
     user,
   }: ICreateArticle): Promise<IArticle> {
     const article = this.databaseRepository.create({
       title,
       description,
+      slug,
+      category,
       user,
     });
 
