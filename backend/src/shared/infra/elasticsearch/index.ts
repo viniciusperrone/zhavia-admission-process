@@ -1,5 +1,4 @@
 import { Client } from '@elastic/elasticsearch';
-import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 
 import dotenv from 'dotenv';
 
@@ -44,6 +43,33 @@ class ElasticsearchConnection {
       console.log('Document indexed successfully');
 
       return result;
+    } catch (error) {
+      console.error('Error indexing document:', error);
+    }
+  }
+
+  public async updateDocument(
+    index: string,
+    id: string,
+    document: object,
+  ): Promise<void> {
+    try {
+      await this.client.update({
+        id,
+        index,
+        body: document,
+      });
+    } catch (error) {
+      console.error('Error indexing document:', error);
+    }
+  }
+
+  public async removeDocument(index: string, id: string): Promise<void> {
+    try {
+      await this.client.delete({
+        id,
+        index,
+      });
     } catch (error) {
       console.error('Error indexing document:', error);
     }
