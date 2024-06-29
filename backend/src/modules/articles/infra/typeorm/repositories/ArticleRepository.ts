@@ -48,7 +48,9 @@ class ArticleRepository implements IArticleRepository {
 
     await this.databaseRepository.save(article);
 
-    await this.elasticsearch.createIndex('articles', article);
+    const result = await this.elasticsearch.indexDocument('articles', article);
+
+    console.log(result);
 
     return article;
   }
@@ -56,7 +58,7 @@ class ArticleRepository implements IArticleRepository {
   public async update(article: IArticle): Promise<IArticle> {
     await this.databaseRepository.save(article);
 
-    await this.elasticsearch.createIndex('articles', article);
+    await this.elasticsearch.indexDocument('articles', article);
 
     return article;
   }
