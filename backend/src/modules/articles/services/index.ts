@@ -3,6 +3,7 @@ import UpdateArticleService from './UpdateArticleService';
 import ListArticlesService from './ListArticlesService';
 import ShowArticleService from './ShowArticleService';
 import DeleteArticleService from './DeleteArticleService';
+import SearchArticleService from './SearchArticleService';
 
 export {
   CreateArticleService,
@@ -10,4 +11,5 @@ export {
   ListArticlesService,
   ShowArticleService,
   DeleteArticleService,
+  SearchArticleService,
 };
