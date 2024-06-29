@@ -11,6 +11,7 @@ import { IArticleRepository } from '@modules/articles/domain/repositories/IArtic
 class ArticleRepository implements IArticleRepository {
   private databaseRepository: Repository<Article>;
   private elasticsearch: ElasticsearchConnection;
+  private readonly documentIndex = 'articles';
 
   constructor() {
     this.databaseRepository = dataSource.getRepository(Article);
@@ -48,9 +49,7 @@ class ArticleRepository implements IArticleRepository {
 
     await this.databaseRepository.save(article);
 
-    const result = await this.elasticsearch.indexDocument('articles', article);
-
-    console.log(result);
+    await this.elasticsearch.indexDocument(this.documentIndex, article);
 
     return article;
   }
@@ -58,7 +57,11 @@ class ArticleRepository implements IArticleRepository {
   public async update(article: IArticle): Promise<IArticle> {
     await this.databaseRepository.save(article);
 
-    await this.elasticsearch.updateDocument('articles', article.uuid, article);
+    await this.elasticsearch.updateDocument(
+      this.documentIndex,
+      article.uuid,
+      article,
+    );
 
     return article;
   }
@@ -74,7 +77,7 @@ class ArticleRepository implements IArticleRepository {
   public async remove(article: IArticle): Promise<void> {
     await this.databaseRepository.remove(article);
 
-    await this.elasticsearch.removeDocument('articles', article.uuid);
+    await this.elasticsearch.removeDocument(this.documentIndex, article.uuid);
   }
 }
 
