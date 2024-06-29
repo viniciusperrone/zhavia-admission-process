@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm';
 
 import { dataSource } from '@shared/infra/typeorm';
+import { ElasticsearchConnection } from '@shared/infra/elasticsearch';
 import Article from '../entities/Article';
 
 import { IArticle } from '@modules/articles/domain/models/IArticle';
@@ -9,9 +10,11 @@ import { IArticleRepository } from '@modules/articles/domain/repositories/IArtic
 
 class ArticleRepository implements IArticleRepository {
   private databaseRepository: Repository<Article>;
+  private elasticsearch: ElasticsearchConnection;
 
   constructor() {
     this.databaseRepository = dataSource.getRepository(Article);
+    this.elasticsearch = new ElasticsearchConnection();
   }
 
   public async findAll(): Promise<IArticle[]> {
@@ -45,11 +48,15 @@ class ArticleRepository implements IArticleRepository {
 
     await this.databaseRepository.save(article);
 
+    await this.elasticsearch.createIndex('articles', article);
+
     return article;
   }
 
   public async update(article: IArticle): Promise<IArticle> {
     await this.databaseRepository.save(article);
+
+    await this.elasticsearch.createIndex('articles', article);
 
     return article;
   }
