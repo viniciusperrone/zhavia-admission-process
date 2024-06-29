@@ -24,6 +24,7 @@ export class CreateArticles1719261601974 implements MigrationInterface {
           {
             name: 'slug',
             type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'category',

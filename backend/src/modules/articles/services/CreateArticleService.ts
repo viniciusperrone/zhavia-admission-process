@@ -33,6 +33,12 @@ class CreateArticleService {
       throw new AppError('Could not find any user with the given id.');
     }
 
+    const slugAlreadyUsed = await this.articleRepository.findBySlug(slug);
+
+    if (slugAlreadyUsed) {
+      throw new AppError('Slug is already being used');
+    }
+
     const article = this.articleRepository.create({
       user: userExist,
       title,

@@ -20,6 +20,14 @@ class ArticleRepository implements IArticleRepository {
     return articles;
   }
 
+  public async findBySlug(slug: string): Promise<IArticle | null> {
+    const article = await this.databaseRepository.findOne({
+      where: { slug },
+    });
+
+    return article;
+  }
+
   public async create({
     title,
     description,
