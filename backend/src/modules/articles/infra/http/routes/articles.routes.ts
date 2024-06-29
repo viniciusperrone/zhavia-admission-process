@@ -28,6 +28,8 @@ articlesRouter.post(
       user_id: Joi.string().uuid().required(),
       title: Joi.string().required(),
       description: Joi.string().required(),
+      slug: Joi.string().required(),
+      category: Joi.string().required(),
     },
   }),
   articleController.create,
@@ -43,6 +45,8 @@ articlesRouter.put(
     [Segments.BODY]: {
       title: Joi.string().optional(),
       description: Joi.string().optional(),
+      slug: Joi.string().optional(),
+      category: Joi.string().optional(),
     },
   }),
   articleController.update,
