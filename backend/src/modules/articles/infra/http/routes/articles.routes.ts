@@ -20,6 +20,16 @@ articlesRouter.get(
   articleController.get,
 );
 
+articlesRouter.get(
+  '/slug/:slug',
+  celebrate({
+    [Segments.PARAMS]: {
+      slug: Joi.string().required(),
+    },
+  }),
+  articleController.getBySlug,
+);
+
 articlesRouter.post(
   '/create',
   isAuthenticated,

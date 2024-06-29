@@ -9,6 +9,7 @@ import {
 } from '@modules/articles/services';
 
 import AppError from '@shared/errors/AppError';
+import ShowBySlugArticleService from '@modules/articles/services/ShowBySlugArticleService';
 
 class ArticleController {
   public async list(request: Request, response: Response): Promise<Response> {
@@ -36,6 +37,29 @@ class ArticleController {
       const getArticle = container.resolve(ShowArticleService);
 
       const article = await getArticle.execute(id);
+
+      return response.json(article);
+    } catch (error) {
+      console.error(error);
+
+      if (error instanceof AppError) {
+        return response.status(400).json({ message: error.message });
+      }
+
+      return response.status(500).json({ message: 'Internal Server Error' });
+    }
+  }
+
+  public async getBySlug(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const { slug } = request.params;
+
+      const getArticle = container.resolve(ShowBySlugArticleService);
+
+      const article = await getArticle.execute(slug);
 
       return response.json(article);
     } catch (error) {
